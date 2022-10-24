@@ -10,6 +10,7 @@ from torch.optim import SGD, Adam
 from utils.model_utils import read_data, read_user_data
 from torchvision import transforms
 
+use_cuda = torch.cuda.is_available()
 
 class Optim:
     def __init__(self, dataset, model, number, similarity, alpha, beta, dim_pca, use_cuda):
@@ -65,6 +66,9 @@ class Optim:
         self.test_loader_full = DataLoader(dataset=self.test_dataset, batch_size=self.batch_size)
         self.log_interval = round(len(self.train_loader.dataset) / (6 * self.batch_size))
 
+
+        
+
     def train(self):
         lowest_loss = np.inf
         for epoch in range(int(self.epochs)):
@@ -74,15 +78,26 @@ class Optim:
             count = 0
 
             # train
+        #    for i, (images, labels) in enumerate(self.train_loader):
+             #   if self.use_cuda:
+                  #  images, labels = images.cuda(), labels.cuda()
+
+            for i, (images, labels) in enumerate(self.train_loader):
+                    def closure():
+                        loss = self.loss(outputs, labels)
+                        loss.backward(retain_graph=True)
+                        return loss
+
+
             for i, (images, labels) in enumerate(self.train_loader):
                 if self.use_cuda:
-                    images, labels = images.cuda(), labels.cuda()
-
+                    images, labels = images.cuda(), labels.cuda()  
+      
                 self.optimizer.zero_grad()
                 outputs = self.model(images)
                 loss = self.loss(outputs, labels)
-                loss.backward()
-                self.optimizer.step()
+              ##  loss.backward()
+                self.optimizer.step(closure)
 
                 if i % self.log_interval == 0:
                     print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
@@ -127,3 +142,5 @@ class Optim:
             os.makedirs(model_path)
         torch.save(self.model,
                    os.path.join(model_path, "server_lowest_" + str(self.similarity) + ".pt"))
+
+

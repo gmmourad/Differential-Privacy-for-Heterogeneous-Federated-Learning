@@ -39,14 +39,17 @@ def generate_data(num_users=100, same_sample_size=True, num_samples=20, dim_inpu
 
     # Creation of directory
     root_path = os.path.dirname(__file__)
-    train_path = root_path + '/data/train/mytrain_' + str(number) + '_' + similarity + '.json'
-    test_path = root_path + '/data/test/mytest_' + str(number) + '_' + similarity + '.json'
-    dir_path = os.path.dirname(train_path)
-    if not os.path.exists(dir_path):
+    train_dir = root_path + '\\data\\train' #\\mytrain_' + str(number) + '_' + str(similarity) + '.json'
+    test_dir = root_path + '\\data\\test' #mytest_' + str(number) + '_' + str(similarity) + '.json'
+    dir_path = os.path.dirname(train_dir)
+    if not os.path.isdir(dir_path):
         os.makedirs(dir_path)
-    dir_path = os.path.dirname(test_path)
-    if not os.path.exists(dir_path):
+    dir_path = os.path.dirname(test_dir)
+    if not os.path.isdir(dir_path):
         os.makedirs(dir_path)
+    
+    train_path = train_dir + '\\mytrain_' + str(number) + '_' + str(similarity) +'.json'
+    test_path = test_dir + '\\mytest_' +str(number) + '_' + str(similarity) + '.json'
 
     # For consistent results
     np.random.seed(0)

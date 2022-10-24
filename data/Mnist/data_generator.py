@@ -21,14 +21,17 @@ def generate_data(similarity, num_users=100, num_samples=20, ratio_training=0.8,
     """
     # Creation of directory
     root_path = os.path.dirname(__file__)
-    train_path = root_path + '/data/train/mytrain_' + str(number) + '_' + str(similarity) + '.json'
-    test_path = root_path + '/data/test/mytest_' + str(number) + '_' + str(similarity) + '.json'
-    dir_path = os.path.dirname(train_path)
-    if not os.path.exists(dir_path):
+    train_dir = root_path + '\\data\\train' #\\mytrain_' + str(number) + '_' + str(similarity) + '.json'
+    test_dir = root_path + '\\data\\test' #mytest_' + str(number) + '_' + str(similarity) + '.json'
+    dir_path = os.path.dirname(train_dir)
+    if not os.path.isdir(dir_path):
         os.makedirs(dir_path)
-    dir_path = os.path.dirname(test_path)
-    if not os.path.exists(dir_path):
+    dir_path = os.path.dirname(test_dir)
+    if not os.path.isdir(dir_path):
         os.makedirs(dir_path)
+    
+    train_path = train_dir + '\\mytrain_' + str(number) + '_' + str(similarity) +'.json'
+    test_path = test_dir + '\\mytest_' +str(number) + '_' + str(similarity) + '.json'
 
     # For consistent results
     np.random.seed(0)
@@ -38,7 +41,7 @@ def generate_data(similarity, num_users=100, num_samples=20, ratio_training=0.8,
 
     # Creation of dataset
     dataset = 'digits'
-    train_images, train_labels = emnist.extract_training_samples(mnist)
+    train_images, train_labels = emnist.extract_training_samples(emnist)
     train_images = np.reshape(train_images, (train_images.shape[0], -1))
     train_images = train_images.astype(np.float32)
     train_labels = train_labels.astype(np.int64)
@@ -142,16 +145,17 @@ def generate_pca_data(similarity, dim_pca=60, num_users=100, num_samples=20, rat
     """
     # Creation of directory
     root_path = os.path.dirname(__file__)
-    train_path = root_path + '/data/train/mytrain_' + str(number) + '_' + str(similarity) + '_' + 'pca' + str(
-        dim_pca) + '.json'
-    test_path = root_path + '/data/test/mytest_' + str(number) + '_' + str(similarity) + '_' + 'pca' + str(
-        dim_pca) + '.json'
-    dir_path = os.path.dirname(train_path)
-    if not os.path.exists(dir_path):
+    train_dir = root_path + '\\data\\train' #\\mytrain_' + str(number) + '_' + str(similarity) + '.json'
+    test_dir = root_path + '\\data\\test' #mytest_' + str(number) + '_' + str(similarity) + '.json'
+    dir_path = os.path.dirname(train_dir)
+    if not os.path.isdir(dir_path):
         os.makedirs(dir_path)
-    dir_path = os.path.dirname(test_path)
-    if not os.path.exists(dir_path):
+    dir_path = os.path.dirname(test_dir)
+    if not os.path.isdir(dir_path):
         os.makedirs(dir_path)
+    
+    train_path = train_dir + '\\mytrain_' + str(number) + '_' + str(similarity) +'.json'
+    test_path = test_dir + '\\mytest_' +str(number) + '_' + str(similarity) + '.json'
 
     # For consistent results
     np.random.seed(0)

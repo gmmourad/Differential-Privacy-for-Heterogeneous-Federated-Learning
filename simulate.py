@@ -33,7 +33,7 @@ def find_optimum(dataset, model, number, dim_input, dim_output, dim_pca=None, si
 
 def simulate(dataset, algorithm, model, dim_input, dim_output, nb_users, nb_samples, sample_ratio, user_ratio,
              weight_decay, local_learning_rate, max_norm, local_updates, noise, times, dp, sigma_gaussian, dim_pca,
-             similarity=None, alpha=0., beta=0., number=0, num_glob_iters=400, time=None):
+             similarity=None, alpha=0., beta=0., number=0, num_glob_iters=10, time=None):
     users_per_round = int(nb_users * user_ratio)
     L = weight_decay
 

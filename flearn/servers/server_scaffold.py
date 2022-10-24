@@ -106,7 +106,7 @@ class SCAFFOLD(Server):
 
             if self.noise:
                 self.apply_channel_effect()
-
+        print("HELLO SCAFFOLD")
         self.save_results()
         self.save_norms()
         self.save_model()

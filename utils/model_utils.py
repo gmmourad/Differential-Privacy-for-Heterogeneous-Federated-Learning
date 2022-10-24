@@ -19,14 +19,13 @@ def read_data(dataset, number, similarity, dim_pca=None):
         train_data: dictionary of train data
         test_data: dictionary of test data
     """
-
+    
     train_data_dir = os.path.join('data', dataset, 'data', 'train')
     test_data_dir = os.path.join('data', dataset, 'data', 'test')
     users = []
     groups = []
     train_data = {}
     test_data = {}
-
     train_files = os.listdir(train_data_dir)
     if dim_pca is not None:
         train_files = [f for f in train_files if

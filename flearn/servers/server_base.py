@@ -61,12 +61,14 @@ class Server:
             user.set_parameters(self.model)
 
     def save_model(self):
+        print("Am I saving the model")
         model_path = os.path.join("models", self.dataset, self.model_name)
         if not os.path.exists(model_path):
             os.makedirs(model_path)
         torch.save(self.model, os.path.join(model_path, "server_" + str(self.similarity) + ".pt"))
 
     def load_model(self):
+        print("Am I loading the model")
         model_path = os.path.join("models", self.dataset, self.model_name, "server_" + str(self.similarity) + ".pt")
         assert (os.path.exists(model_path))
         self.model = torch.load(model_path)
@@ -95,6 +97,7 @@ class Server:
 
     def save_results(self):
         """ Save loss (train and test), accuracy (train and test), dissimilarity (train) to h5 file"""
+        print("AM I saving the results")
         model_path = os.path.join("./results", self.model_name)
         if not os.path.exists(model_path):
             os.makedirs(model_path)
@@ -120,6 +123,7 @@ class Server:
 
     def save_norms(self):
         """ Save norms to h5 file"""
+        print("Am I saving the norms")
         model_path = os.path.join("./results", self.model_name)
         if not os.path.exists(model_path):
             os.makedirs(model_path)

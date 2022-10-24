@@ -128,9 +128,9 @@ def run_simulation(time, dataset, algo, model, similarity, alpha, beta, number, 
     noises = [False]
     similarities = [1.0, 0.1, 0.0] # for Femnist, Mnist, CIFAR data
     if dp == "None":
-        local_learning_rate_list = []  # TO FILL for tuning (without dp)
+        local_learning_rate_list = [0.01]  # TO FILL for tuning (without dp)
     elif dp == "Gaussian":
-        local_learning_rate_list = []  # TO FILL for tuning (with dp)
+        local_learning_rate_list = [0.01]  # TO FILL for tuning (with dp)
     # for logistic data
     alphas = [0.0, 1.0, 5.0]  # heterogeneity : between models
     betas = [0.0, 1.0, 5.0]  # heterogeneity : between data records
@@ -181,12 +181,18 @@ def run_simulation(time, dataset, algo, model, similarity, alpha, beta, number, 
                              dim_output=logistic_dict["dim_output"], alpha=alpha, beta=beta)
 
     elif tuning:
+        #print("DID I ENTER HERE")
         if dataset in ['Femnist', 'Mnist', 'CIFAR_10']:
             for similarity in similarities:
+                #print("DID I GET IN SIMILARITY")
                 for noise in noises:
+                    #print("DID I GET IN NOISES")
                     for dp in dps:
+                       # print("DID I GET IN DPS")
                         for algorithm in algorithms:
+                            #print("DID I GET IN ALGO")
                             for lr in local_learning_rate_list:
+                                #print("Did I get in")
                                 input_dict["local_learning_rate"] = lr
                                 print("Hyperparameter :{}".format(lr))
                                 simulate_cross_validation(**input_dict, algorithm=algorithm, similarity=similarity,
@@ -235,17 +241,17 @@ def run_simulation(time, dataset, algo, model, similarity, alpha, beta, number, 
 
         # Plots with same sigma_gaussian, same T, same K, same l, same s + various similarities
         plot_test_accuracy(dataset, algorithms, noises, similarities, str(number), sigma_gaussian, local_updates,
-                           sample_ratio, user_ratio, input_dict["model"])
+                           sample_ratio, user_ratio, input_dict["model"], times)
         plot_train_loss(dataset, algorithms, noises, similarities, str(number), sigma_gaussian, local_updates,
-                        sample_ratio, user_ratio, input_dict["model"])
+                        sample_ratio, user_ratio, input_dict["model"], times)
         plot_norms(dataset, algorithms, noises, similarities, str(number), sigma_gaussian, local_updates,
-                   sample_ratio, user_ratio, input_dict["model"])
+                   sample_ratio, user_ratio, input_dict["model"], times)
         plot_train_dissimilarity(dataset, algorithms, noises, similarities, str(number), sigma_gaussian,
-                                 local_updates, sample_ratio, user_ratio, input_dict["model"])
+                                 local_updates, sample_ratio, user_ratio, input_dict["model"], times)
 
         # Plots with same sigma_gaussian, same K, same l + various similarities, various s, various T
 
-        list_of_sample_ratio = []  # TO FILL, for instance: 0.05, 0.1, 0.2
+        list_of_sample_ratio = [0.05, 0.1, 0.2]  # TO FILL, for instance: 0.05, 0.1, 0.2
         if len(list_of_sample_ratio) > 0:
             plot_test_accuracy_multiple_sample_ratio(dataset, algorithms, noises, similarities, str(number),
                                                      sigma_gaussian,
@@ -257,7 +263,7 @@ def run_simulation(time, dataset, algo, model, similarity, alpha, beta, number, 
 
         # Plots with same sigma_gaussian, same K, same s + various similarities, various l, various T
 
-        list_of_user_ratio = []  # TO FILL: for instance, 0.12, 0.1, 0.08
+        list_of_user_ratio = [0.12, 0.1, 0.08]  # TO FILL: for instance, 0.12, 0.1, 0.08
         if len(list_of_user_ratio) > 0:
             plot_test_accuracy_multiple_user_ratio(dataset, algorithms, noises, similarities, str(number),
                                                    sigma_gaussian,

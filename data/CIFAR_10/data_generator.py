@@ -24,15 +24,17 @@ def generate_data(similarity, num_users=50, num_samples=1000, number=0):
     assert num_users * num_samples == 50000 and 10000 % num_users == 0, "Distribution of nb users/samples not adapted"
     # Creation of directory
     root_path = os.path.dirname(__file__)
-    print(root_path)
-    train_path = root_path + '/data/train/mytrain_' + str(number) + '_' + str(similarity) + '.json'
-    test_path = root_path + '/data/test/mytest_' + str(number) + '_' + str(similarity) + '.json'
-    dir_path = os.path.dirname(train_path)
-    if not os.path.exists(dir_path):
+    train_dir = root_path + '\\data\\train' #\\mytrain_' + str(number) + '_' + str(similarity) + '.json'
+    test_dir = root_path + '\\data\\test' #mytest_' + str(number) + '_' + str(similarity) + '.json'
+    dir_path = os.path.dirname(train_dir)
+    if not os.path.isdir(dir_path):
         os.makedirs(dir_path)
-    dir_path = os.path.dirname(test_path)
-    if not os.path.exists(dir_path):
+    dir_path = os.path.dirname(test_dir)
+    if not os.path.isdir(dir_path):
         os.makedirs(dir_path)
+    
+    train_path = train_dir + '\\mytrain_' + str(number) + '_' + str(similarity) +'.json'
+    test_path = test_dir + '\\mytest_' +str(number) + '_' + str(similarity) + '.json'
 
     # For consistent results
     np.random.seed(0)

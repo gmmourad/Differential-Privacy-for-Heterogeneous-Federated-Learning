@@ -87,6 +87,7 @@ class FedAvg(Server):
             if self.noise:
                 self.apply_channel_effect()
 
+        print("HELLO AVG")
         self.save_results()
         self.save_norms()
         self.save_model()
